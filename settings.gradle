@@ -1,0 +1,3 @@
+rootProject.name = 'conditional-dependency-demo'
+include 'library'
+

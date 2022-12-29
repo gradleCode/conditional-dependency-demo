@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("${rootDir}/publishing-repository")
+    }
+}
+
+//推荐方式，可集中控制依赖条件
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        if (project.hasProperty("isLocal"))
+            substitute(module("com.gradle:library:1.0-SNAPSHOT"))
+                    .using(project(":library"))
+                    .because("Source code dependency.")
+    }
+}
+
+dependencies {
+//    if (project.hasProperty("isLocal")) {
+//        implementation(project(":library"))
+//    } else {
+//        implementation("com.gradle:library:1.0-SNAPSHOT")
+//    }
+    implementation("com.gradle:library:1.0-SNAPSHOT")
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+}
+
+task runClass(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "org.example.Main"
+    args "arg1", "arg2"
+}
+
+test {
+    useJUnitPlatform()
+}
