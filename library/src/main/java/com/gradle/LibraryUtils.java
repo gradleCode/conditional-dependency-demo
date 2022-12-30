@@ -1,8 +1,8 @@
 package com.gradle;
 
 public class LibraryUtils {
-    static final String VERSION_CODE = "1.0.1";
-    static final String FROM = "local";
+    static final String VERSION_CODE = "1.0.0";
+    static final String FROM = "remote";
 
     public static void libraryVersion(){
         System.out.println("library version: " + VERSION_CODE);
